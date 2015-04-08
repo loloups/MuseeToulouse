@@ -2,7 +2,7 @@ package museetoulouse
 
 class Adresse {
 
-    int numero
+    String numero
     String rue
     int codePostal
     String ville
