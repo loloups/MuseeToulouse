@@ -7,11 +7,12 @@ class DemandeVisite {
     Date dateFinPeriode;
     int nbPersonnes;
     String statut;
-    static hasMany = [gestionnaires: Gestionnaire]
+    static hasMany = [musees: Musee]
     static constraints = {
         code blank : false
         dateDebutPeriode blank : false
         dateFinPeriode blank : false
         statut blank: true
     }
+    static belongsTo = [Musee]
 }

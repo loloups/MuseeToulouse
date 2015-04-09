@@ -3,7 +3,7 @@ package museetoulouse
 class Gestionnaire {
 
     String nom;
-    static hasMany = [ gestionnaires : Gestionnaire]
+    static hasMany = [ musees : Musee]
 
     static constraints = {
         nom blank:false
