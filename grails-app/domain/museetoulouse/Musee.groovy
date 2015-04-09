@@ -11,6 +11,6 @@ class Musee {
     Adresse adresse
 
     static constraints = {
-        telephone matches: "d{10}"
+        //telephone matches: "d{10}"
     }
 }

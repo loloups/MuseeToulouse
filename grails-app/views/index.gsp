@@ -86,7 +86,14 @@
 		<div id="page-body" role="main">
 			<h1>Bienvenue sur Musée Toulouse</h1>
 			<div id="controller-list" role="navigation">
+
 				<h2>Recherche de musee:</h2>
+				<form method="post" action="gestionnaire">
+					<input type="submit" value="Gest" />
+				</form>
+				<form method="post" action="adresse">
+					<input type="submit" value="Add" />
+				</form>
 				<form method="post" action="musee">
 					Nom : <input type="search" placeholder="Entrez un nom de musée" name="nom">
 					Code Postal : <select name="codepostal" >
@@ -95,7 +102,7 @@
 									</g:each>
 								</select>
 					Rue: <input type="search" placeholder="Entrez une rue" name="rue">
-					<input type="submit" value="Rechercher" />
+					<g:link controller="musee" action="search" params="[nom:nom,codePostal:codepostal,rue:rue]">
 				</form>
 			</div>
 		</div>

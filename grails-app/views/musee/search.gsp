@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: loicleger
-  Date: 08/04/15
-  Time: 15:18
---%>
-
 
 <%@ page import="museetoulouse.Musee" %>
 <!DOCTYPE html>
@@ -31,11 +24,11 @@
         <thead>
         <tr>
 
-            <g:sortableColumn property="telephone" title="${message(code: 'musee.telephone.label', default: 'Telephone')}" />
-
             <g:sortableColumn property="accesBus" title="${message(code: 'musee.accesBus.label', default: 'Acces Bus')}" />
 
             <g:sortableColumn property="accesMetro" title="${message(code: 'musee.accesMetro.label', default: 'Acces Metro')}" />
+
+            <th><g:message code="musee.adresse.label" default="Adresse" /></th>
 
             <g:sortableColumn property="horairesOuverture" title="${message(code: 'musee.horairesOuverture.label', default: 'Horaires Ouverture')}" />
 
@@ -46,14 +39,14 @@
         </tr>
         </thead>
         <tbody>
-        <g:each in="${museesList}" status="i" var="museeInstance">
+        <g:each in="${museeSearchList}" status="i" var="museeInstance">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-                <td><g:link action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "telephone")}</g:link></td>
-
-                <td>${fieldValue(bean: museeInstance, field: "accesBus")}</td>
+                <td><g:link action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "accesBus")}</g:link></td>
 
                 <td>${fieldValue(bean: museeInstance, field: "accesMetro")}</td>
+
+                <td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
 
                 <td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
 
@@ -66,7 +59,7 @@
         </tbody>
     </table>
     <div class="pagination">
-        <g:paginate total="${museesList ?: 0}" />
+        <g:paginate total="${museeInstanceCount ?: 0}" />
     </div>
 </div>
 </body>
