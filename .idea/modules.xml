@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MuseeToulouse.iml" filepath="$PROJECT_DIR$/MuseeToulouse.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MuseeToulouse-grailsPlugins.iml" filepath="$PROJECT_DIR$/MuseeToulouse-grailsPlugins.iml" />
     </modules>
   </component>
 </project>
