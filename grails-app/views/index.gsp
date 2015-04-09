@@ -87,7 +87,7 @@
 			<h1>Bienvenue sur Musée Toulouse</h1>
 			<div id="controller-list" role="navigation">
 				<h2>Recherche de musee:</h2>
-				<form>
+				<form method="post" action="musee">
 					Nom : <input type="search" placeholder="Entrez un nom de musée" name="nom">
 					Code Postal : <select name="codepostal" >
 									<g:each var="c" in="${museetoulouse.Adresse.findAll()}">
