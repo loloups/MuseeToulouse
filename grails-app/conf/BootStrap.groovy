@@ -6,12 +6,12 @@ import museetoulouse.Musee
 
 class BootStrap {
 
-    InitHibernateWithCsvDataService init_hibernate
+    def initHibernateWithCsvDataService
 
     def init = { servletContext ->
         if(Musee.count == 0)
         {
-
+            //initHibernateWithCsvDataService.serviceMethod()
         }
     }
     def destroy = {
