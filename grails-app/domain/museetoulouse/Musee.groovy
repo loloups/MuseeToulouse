@@ -9,7 +9,7 @@ class Musee {
 
     Gestionnaire responsable
     Adresse adresse
-
+    static hasMany = [demandesVisites: DemandeVisite]
     static constraints = {
         //telephone matches: "d{10}"
     }
