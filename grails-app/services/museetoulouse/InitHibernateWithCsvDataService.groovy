@@ -13,7 +13,7 @@ class InitHibernateWithCsvDataService {
 
 
 
-        String strfile = "C:\\Users\\Julien\\Documents\\ProjectJEE\\Musee.csv";
+        String strfile = ".\\Musee.csv";
         CSVReader reader = new CSVReader(new FileReader(strfile));
         ArrayList<String> tab_col;
 
