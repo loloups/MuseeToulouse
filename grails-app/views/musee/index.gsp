@@ -31,7 +31,7 @@
 						<label for="codepostal">
 							Le code postal :
 						</label>
-						<g:select name="codepostal" from="${museetoulouse.Adresse.list().codePostal}" value="${codepostal}" noSelection="['':'-Choose your Code Postal-']"/>
+						<g:select name="codepostal" from="${museetoulouse.Adresse.list().codePostal}" noSelection="['':'-Choose your Code Postal-']"/>
 						<label for="rue">
 							La rue contient :
 						</label>
