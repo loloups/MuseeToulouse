@@ -11,7 +11,7 @@ class BootStrap {
     def init = { servletContext ->
         if(Musee.count == 0)
         {
-            //initHibernateWithCsvDataService.serviceMethod()
+            initHibernateWithCsvDataService.serviceMethod()
         }
     }
     def destroy = {

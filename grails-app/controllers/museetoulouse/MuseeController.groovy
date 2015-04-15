@@ -8,6 +8,8 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class MuseeController {
 
+    MuseeService museeService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -24,14 +26,8 @@ class MuseeController {
     }
 
     def search() {
-        Adresse adresse = Adresse.findByCodePostalAndRue(params.codepostal,params.rue)
-        List<Musee> musees
-        //params.max = Math.min(max ?: 10, 100)
-        if(adresse)
-            musees = Musee.findAllByNomAndAdresse(params.nom,adresse)
-        else
-            musees = Musee.findByNom(params.nom)
-        respond musees(params) ,model:[museeSearchCount: musees.count()]
+        def museeList = museeService.searchMusees(params.nom,params.codepostal, params.rue)
+        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.size()])
     }
 
     @Transactional
