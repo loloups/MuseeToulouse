@@ -94,16 +94,12 @@
 				<form method="post" action="adresse">
 					<input type="submit" value="Add" />
 				</form>
-				<form method="post" action="musee">
-					Nom : <input type="search" placeholder="Entrez un nom de musée" name="nom">
-					Code Postal : <select name="codepostal" >
-									<g:each var="c" in="${museetoulouse.Adresse.findAll()}">
-										<option>${c.codePostal}</option>
-									</g:each>
-								</select>
-					Rue: <input type="search" placeholder="Entrez une rue" name="rue">
-					<g:link controller="musee" action="search" params="[nom:nom,codePostal:codepostal,rue:rue]">
-				</form>
+				<g:form action = "search" controller="musee">
+					Nom : <g:field type="search" placeholder="Entrez un nom de musée" name="nom" value="${nom}"/>
+					Code Postal : <g:select name="codepostal" from="${museetoulouse.Adresse.list().codePostal}" value="${codepostal}" noSelection="['':'-Choose your Code Postal-']"/>
+					Rue: <g:field type="search" placeholder="Entrez un nom de musée" name="rue" value="${rue}"/>
+					<input type="submit" value="Valider">
+				</g:form>
 			</div>
 		</div>
 	</body>
