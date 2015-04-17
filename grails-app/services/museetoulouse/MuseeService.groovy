@@ -16,7 +16,7 @@ class MuseeService {
      * @param inNomRue chaîne de caractère presente dans la rue du musee
      * @return
      */
-    List<Musee> searchMusees(String inNomMusee, String inCodePostal, String inNomRue) {
+    List<Musee> searchMusees(String inNomMusee, String inCodePostal, String inNomRue,params) {
         def criteria = Musee.createCriteria()
         List<Musee> res = criteria.list {
             if (inNomMusee) {
@@ -24,7 +24,7 @@ class MuseeService {
             }
             if (inCodePostal) {
                 adresse {
-                        like 'codePostal', "${inCodePostal}"
+                        eq 'codePostal', Integer.decode(inCodePostal)
                 }
             }
             if (inNomRue) {
@@ -32,8 +32,19 @@ class MuseeService {
                     like 'rue', "%${inNomRue}%"
                 }
             }
-            order('nom')
+            order 'nom'
         }
         res
+    }
+
+    /** Ajouter un musée aux musées préféré
+     *
+     * @param musee
+     * @return la liste des musees préférées
+     */
+    List<Musee> addMuseePrefere(Musee musee) {
+        musee.setPrefere(true)
+        musee.save(flush: true)
+        Musee.findAllByPrefere(true)
     }
 }

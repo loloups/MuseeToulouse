@@ -21,68 +21,109 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 
-			<g:form>
-				<fieldset class="form">
-					<div class="fieldcontain">
-						<label for="nom">
-							Nom du musée contient :
-						</label>
-						<g:textField name="nom"/>
-						<label for="codepostal">
-							Le code postal :
-						</label>
-						<g:select name="codepostal" from="${museetoulouse.Adresse.list().codePostal}" noSelection="['':'-Choose your Code Postal-']"/>
-						<label for="rue">
-							La rue contient :
-						</label>
-						<g:textField name="rue"/>
-					</div>
-					<div style="float: right">
-						<g:actionSubmit action="doSearchMusees" value="Rechercher" />
-					</div>
-				</fieldset>
+			<div style="float:left;">
+				<g:form>
+					<fieldset class="form">
+						<div class="fieldcontain">
+							<label for="nom">
+								Nom du musée contient :
+							</label>
+							<g:textField name="nom"/>
+						</div>
+						<div class="fieldcontain">
+							<label for="codepostal">
+								Le code postal :
+							</label>
+							<g:select name="codepostal" from="${museetoulouse.Adresse.list().codePostal.unique()}" noSelection="['':'-Choose your Code Postal-']"/>
+						</div>
+						<div class="fieldcontain">
+							<label for="rue">
+								La rue contient :
+							</label>
+							<g:textField name="rue"/>
+						</div>
+						<div style="float: right">
+							<g:actionSubmit action="doSearchMusees" value="Rechercher" />
+						</div>
+					</fieldset>
 
-			</g:form>
+				</g:form>
+			</div>
+			<div style="float: right;">
+				<g:if test="${museesPrefereesCount > 0}"><table>
+					<caption>Liste de mes musées préférés</caption>
+					<thead>
+					<tr>
+						<g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
+						<th></th>
+					</tr>
+					</thead>
+					<tbody>
+					<g:each in="${museesPreferees}" status="i" var="museePreferee">
+						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+							<td>${fieldValue(bean: museePreferee, field: "nom")}</td>
+							<td></td>
+						</tr>
+					</g:each>
+					</tbody>
+				</table></g:if>
+			</div>
+			<div>
 			<table>
 			<thead>
 					<tr>
+						<g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
+
+						<g:sortableColumn property="telephone" title="${message(code: 'musee.telephone.label', default: 'Telephone')}" />
+
+						<th><g:message code="musee.adresse.label" default="Adresse" /></th>
 					
 						<g:sortableColumn property="accesBus" title="${message(code: 'musee.accesBus.label', default: 'Acces Bus')}" />
 					
 						<g:sortableColumn property="accesMetro" title="${message(code: 'musee.accesMetro.label', default: 'Acces Metro')}" />
 					
-						<th><g:message code="musee.adresse.label" default="Adresse" /></th>
-					
 						<g:sortableColumn property="horairesOuverture" title="${message(code: 'musee.horairesOuverture.label', default: 'Horaires Ouverture')}" />
 					
-						<g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
-					
 						<th><g:message code="musee.responsable.label" default="Responsable" /></th>
+
+						<th></th>
 					
 					</tr>
 				</thead>
 				<tbody>
 				<g:each in="${museeInstanceList}" status="i" var="museeInstance">
-					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${museeInstance.id}">${fieldValue(bean: museeInstance, field: "accesBus")}</g:link></td>
+						<td>${fieldValue(bean: museeInstance, field: "nom")}</td>
+
+						<td>${fieldValue(bean: museeInstance, field: "telephone")}</td>
+
+						<td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
+
+						<td>${fieldValue(bean: museeInstance, field: "accesBus")}</td>
 					
 						<td>${fieldValue(bean: museeInstance, field: "accesMetro")}</td>
 					
-						<td>${fieldValue(bean: museeInstance, field: "adresse")}</td>
-					
 						<td>${fieldValue(bean: museeInstance, field: "horairesOuverture")}</td>
-					
-						<td>${fieldValue(bean: museeInstance, field: "nom")}</td>
-					
+
 						<td>${fieldValue(bean: museeInstance, field: "responsable")}</td>
+
+						<td><g:if test="${museeInstance.prefere == false}">
+							<g:form url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT" >
+								<fieldset class="buttons">
+									<g:actionSubmit class="btn-success" action="ajouterMuseePreferee" value="Ajouter à la liste des musées" />
+								</fieldset>
+							</g:form>
+						</g:if></td>
 					
 					</tr>
 				</g:each>
 				</tbody>
+				<tfoot>
+					<div class="pagination">
+						<g:paginate max="5" total="${museeInstanceCount ?: 0}" name=""/>
+					</div>
+				</tfoot>
 			</table>
-			<div class="pagination">
-				<g:paginate total="${museeInstanceCount ?: 0}" />
 			</div>
 		</div>
 	</body>

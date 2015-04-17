@@ -13,7 +13,7 @@ class MuseeController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 5, 100)
         respond Musee.list(params), model:[museeInstanceCount: Musee.count()]
     }
 
@@ -25,9 +25,17 @@ class MuseeController {
         respond new Musee(params)
     }
 
-    def search() {
-        def museeList = museeService.searchMusees(params.nom,params.codepostal, params.rue)
+    def doSearchMusees() {
+        def museeList = museeService.searchMusees(params.nom,params.codepostal, params.rue,[max:5])
         render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.size()])
+    }
+
+    @Transactional
+    def ajouterMuseePreferee(Musee museeInstance) {
+        def museesPreferees = museeService.addMuseePrefere(museeInstance)
+        //museeInstance.save(flush: true)
+        params.max = 5;
+        render(view: 'index', model: [museeInstanceList: Musee.list(params), museeInstanceCount: Musee.count(),museesPreferees: museesPreferees,museesPrefereesCount: museesPreferees.size()])
     }
 
     @Transactional
