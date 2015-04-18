@@ -27,7 +27,8 @@ class MuseeController {
 
     def doSearchMusees() {
         def museeList = museeService.searchMusees(params.nom,params.codepostal, params.rue,[max:5])
-        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeList.size()])
+        def museeSize = museeService.numberSearchMusees(params.nom,params.codepostal, params.rue,[max:5])
+        render(view: 'index', model: [museeInstanceList: museeList, museeInstanceCount: museeSize])
     }
 
     @Transactional

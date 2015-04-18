@@ -17,10 +17,12 @@ class MuseeService {
      * @return
      */
     List<Musee> searchMusees(String inNomMusee, String inCodePostal, String inNomRue,params) {
+        params.max  = Math.min(params.max?.toInteger() ?: 5, 100)
+        params.offset = params.offset ? params.offset.toInteger() : 0
         def criteria = Musee.createCriteria()
-        List<Musee> res = criteria.list {
+        List<Musee> res = criteria.list(params) {
             if (inNomMusee) {
-                    like 'nom', "%${inNomMusee}%"
+                    like 'nom', "%${inNomMusee.toUpperCase()}%"
             }
             if (inCodePostal) {
                 adresse {
@@ -29,7 +31,7 @@ class MuseeService {
             }
             if (inNomRue) {
                 adresse {
-                    like 'rue', "%${inNomRue}%"
+                    like 'rue', "%${inNomRue.toUpperCase()}%"
                 }
             }
             order 'nom'
@@ -37,6 +39,26 @@ class MuseeService {
         res
     }
 
+    int numberSearchMusees(String inNomMusee, String inCodePostal, String inNomRue,params) {
+        def criteria = Musee.createCriteria()
+        List<Musee> res = criteria.list() {
+            if (inNomMusee) {
+                like 'nom', "%${inNomMusee.toUpperCase()}%"
+            }
+            if (inCodePostal) {
+                adresse {
+                    eq 'codePostal', Integer.decode(inCodePostal)
+                }
+            }
+            if (inNomRue) {
+                adresse {
+                    like 'rue', "%${inNomRue.toUpperCase()}%"
+                }
+            }
+            order 'nom'
+        }
+        res.size()
+    }
     /** Ajouter un musée aux musées préféré
      *
      * @param musee
