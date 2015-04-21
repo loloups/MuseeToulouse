@@ -65,8 +65,20 @@ class MuseeService {
      * @return la liste des musees préférées
      */
     List<Musee> addMuseePrefere(Musee musee) {
-        musee.setPrefere(true)
-        musee.save(flush: true)
+        if(musee)
+        {
+            musee.setPrefere(true)
+            musee.save(flush: true)
+        }
+        Musee.findAllByPrefere(true)
+    }
+
+    List<Musee> deleteMuseePrefere(Musee musee) {
+        if(musee)
+        {
+            musee.setPrefere(false)
+            musee.save(flush: true)
+        }
         Musee.findAllByPrefere(true)
     }
 }

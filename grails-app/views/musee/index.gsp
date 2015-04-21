@@ -6,6 +6,91 @@
 		<meta name="layout" content="main">
 		<g:set var="entityName" value="${message(code: 'musee.label', default: 'Musee')}" />
 		<title><g:message code="default.list.label" args="[entityName]" /></title>
+		<style type="text/css" media="screen">
+		#status {
+			background-color: #eee;
+			border: .2em solid #fff;
+			margin: 2em 2em 1em;
+			padding: 1em;
+			width: 12em;
+			float: left;
+			-moz-box-shadow: 0px 0px 1.25em #ccc;
+			-webkit-box-shadow: 0px 0px 1.25em #ccc;
+			box-shadow: 0px 0px 1.25em #ccc;
+			-moz-border-radius: 0.6em;
+			-webkit-border-radius: 0.6em;
+			border-radius: 0.6em;
+		}
+
+		.ie6 #status {
+			display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
+		}
+
+
+
+		/*#temp*/
+		/*{*/
+			/*table-layout: fixed;*/
+			/*width: 100%;*/
+		/*}*/
+
+		#status ul {
+			font-size: 0.9em;
+			list-style-type: none;
+			margin-bottom: 0.6em;
+			padding: 0;
+		}
+
+		#status li {
+			line-height: 1.3;
+		}
+
+		#status h1 {
+			text-transform: uppercase;
+			font-size: 1.1em;
+			margin: 0 0 0.3em;
+		}
+
+		#page-body {
+			margin: 2em 1em 1.25em 18em;
+		}
+
+		h2 {
+			margin-top: 1em;
+			margin-bottom: 0.3em;
+			font-size: 1em;
+		}
+
+		p {
+			line-height: 1.5;
+			margin: 0.25em 0;
+		}
+
+		#controller-list ul {
+			list-style-position: inside;
+		}
+
+		#controller-list li {
+			line-height: 1.3;
+			list-style-position: inside;
+			margin: 0.25em 0;
+		}
+
+		@media screen and (max-width: 480px) {
+			#status {
+				display: none;
+			}
+
+			#page-body {
+				margin: 0 1em 1em;
+			}
+
+			#page-body h1 {
+				margin-top: 0;
+			}
+		}
+		</style>
+		<g:javascript library="jquery" />
 	</head>
 	<body>
 		<a href="#list-musee" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -21,7 +106,7 @@
 				<div class="message" role="status">${flash.message}</div>
 			</g:if>
 
-			<div style="float:left;">
+			<div>
 				<g:form>
 					<fieldset class="form">
 						<div class="fieldcontain">
@@ -49,27 +134,12 @@
 
 				</g:form>
 			</div>
-			<div style="float: right;">
-				<g:if test="${museesPrefereesCount > 0}"><table>
-					<caption>Liste de mes musées préférés</caption>
-					<thead>
-					<tr>
-						<g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
-						<th></th>
-					</tr>
-					</thead>
-					<tbody>
-					<g:each in="${museesPreferees}" status="i" var="museePreferee">
-						<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-							<td>${fieldValue(bean: museePreferee, field: "nom")}</td>
-							<td></td>
-						</tr>
-					</g:each>
-					</tbody>
-				</table></g:if>
+			<div id="encart" style="float: right; max-width: 15%; max-height: 60%; overflow:auto; position: fixed; right: 2%; top: 30%; font-size: 80%;">
+				<g:render id="" template="/aa1" collection="${print}"/>
+
 			</div>
-			<div>
-			<table>
+			<div style="max-width: 100%; overflow:auto;">
+			<table id="temp" style="width: 100%; table-layout: fixed; font-size: 70%">
 			<thead>
 					<tr>
 						<g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
@@ -107,13 +177,13 @@
 
 						<td>${fieldValue(bean: museeInstance, field: "responsable")}</td>
 
-						<td><g:if test="${museeInstance.prefere == false}">
-							<g:form url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT" >
+						<td>
+							<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris')" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
 								<fieldset class="buttons">
-									<g:actionSubmit class="btn-success" action="ajouterMuseePreferee" value="Ajouter à la liste des musées" />
+									<g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${museeInstance.prefere? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${museeInstance.prefere? "true" : "false"}"></g:actionSubmit>
 								</fieldset>
-							</g:form>
-						</g:if></td>
+							</g:formRemote>
+						</td>
 					
 					</tr>
 				</g:each>

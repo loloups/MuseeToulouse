@@ -36,7 +36,35 @@ class MuseeController {
         def museesPreferees = museeService.addMuseePrefere(museeInstance)
         //museeInstance.save(flush: true)
         params.max = 5;
-        render(view: 'index', model: [museeInstanceList: Musee.list(params), museeInstanceCount: Musee.count(),museesPreferees: museesPreferees,museesPrefereesCount: museesPreferees.size()])
+        render(template: '../aa1', model: [museeInstanceList: Musee.list(params), museeInstanceCount: Musee.count(),museesPreferees: museesPreferees,museesPrefereesCount: museesPreferees.size()])
+        //Put this at the top
+
+//now in controllers when rendering use this.
+//        render( { jq ->
+//            jq("#encart").removeAttr('hidden');
+//            jq("#museePrefere tbody").html( g.render( template:"list", model:[list:museesPreferees]) )
+//        } as Javascript)
+//        render text: """<script type="text/javascript">
+//            alert(${museesPreferees.get(0).getNom()});
+//        </script>""", contentType: 'application/javascript'
+    }
+
+    @Transactional
+    def supprimerMuseePreferee(Musee museeInstance) {
+        def museesPreferees = museeService.deleteMuseePrefere(museeInstance)
+        //museeInstance.save(flush: true)
+        params.max = 5;
+        render(template: '../aa1', model: [museeInstanceList: Musee.list(params), museeInstanceCount: Musee.count(),museesPreferees: museesPreferees,museesPrefereesCount: museesPreferees.size()])
+        //Put this at the top
+
+//now in controllers when rendering use this.
+//        render( { jq ->
+//            jq("#encart").removeAttr('hidden');
+//            jq("#museePrefere tbody").html( g.render( template:"list", model:[list:museesPreferees]) )
+//        } as Javascript)
+//        render text: """<script type="text/javascript">
+//            alert(${museesPreferees.get(0).getNom()});
+//        </script>""", contentType: 'application/javascript'
     }
 
     @Transactional

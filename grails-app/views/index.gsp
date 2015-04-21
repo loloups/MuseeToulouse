@@ -23,6 +23,11 @@
 				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
 			}
 
+			table {
+				border-color: red;
+				-moz-tab-size: 100;
+			}
+
 			#status ul {
 				font-size: 0.9em;
 				list-style-type: none;
