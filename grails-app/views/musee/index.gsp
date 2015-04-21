@@ -178,7 +178,7 @@
 						<td>${fieldValue(bean: museeInstance, field: "responsable")}</td>
 
 						<td>
-							<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris')" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
+							<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris'); jQuery('#encart').show();" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
 								<fieldset class="buttons">
 									<g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${museeInstance.prefere? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${museeInstance.prefere? "true" : "false"}"></g:actionSubmit>
 								</fieldset>
