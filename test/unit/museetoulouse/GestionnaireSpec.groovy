@@ -11,34 +11,33 @@ import spock.lang.Unroll
 class GestionnaireSpec extends Specification {
 
     @Unroll
-    void "test la validite d'une gestionnaire valide"(String unNumero,String uneRue,int unCodePostal,String uneVille) {
+    void "test la validite d'un gestionnaire"(String nom) {
 
-        given: "une adresse initialise avec un numero, une rue, un code postal et une ville"
-        Adresse adresse = new Adresse(numero: unNumero, rue: uneRue,codePostal: unCodePostal, ville: uneVille)
+        given: "un gestionnaire initialisee avec son nom"
+        Gestionnaire gestionnaire = new Gestionnaire(nom)
 
-        expect: "l'adresse est valide"
-        adresse.validate() == true
+        expect: "le gestionnaire est valide"
+        gestionnaire.validate() == true
 
         where:
-        unNumero | uneRue | unCodePostal | uneVille
-        "num"| "rue" | 34567 | "MONTECH"
+        nom
+        "azegs"
+        "1234"
     }
 
     @Unroll
-    void "test l'invalidite d'un gestionnaire invalide"(String unNumero,String uneRue,int unCodePostal,String uneVille) {
+    void "test l'invalidite d'un gestionnaire"(String nom) {
 
-        given: "une adresse initialise avec un numero, une rue, un code postal et une ville"
-        Adresse adresse = new Adresse(numero: unNumero, rue: uneRue,codePostal: unCodePostal, ville: uneVille)
+        given: "un gestionnaire initialisee avec son nom"
+        Gestionnaire gestionnaire = new Gestionnaire(nom)
 
-        expect: "l'adresse est valide"
-        adresse.validate() == false
+        expect: "le gestionnaire est valide"
+        gestionnaire.validate() == false
 
         where:
-        unNumero | uneRue | unCodePostal | uneVille
-        ""| "rue" | 34567 | "MONTECH"
-        "num"| "" | 34567 | "MONTECH"
-        "num"| "rue" | 3456 | "MONTECH"
-        "num"| "rue" | 34567 | "Montech"
+        nom
+        ""
+        1234
     }
 }
 
