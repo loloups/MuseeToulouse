@@ -10,8 +10,10 @@ class AdresseControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
+        params["numero"] = '34';
+        params["rue"] = 'Moulin Jean';
+        params["codePostal"] = 45678;
+        params["ville"] = 'Montech';
     }
 
     void "Test the index action returns the correct model"() {
