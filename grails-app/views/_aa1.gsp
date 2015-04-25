@@ -5,12 +5,16 @@
         <tr>
             %{--<th> Favoris </th>--}%
             <g:sortableColumn property="nom" title="${message(code: 'musee.nom.label', default: 'Nom')}" />
-            <th></th>
+            <th>
+                <g:form controller="demandeVisite">
+                    <g:actionSubmit class="btn-success" action="create" value="Effectuer une demande de visite"/>
+                </g:form>
+        </th>
             <th><div style="text-align: right" onclick="jQuery('#encart').hide();">X</div> </th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${museesPreferees}" status="i" var="museePreferee">
+        <g:each in="${session.musees}" status="i" var="museePreferee">
             <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
                 <td>${fieldValue(bean: museePreferee, field: "nom")}</td>
                 <td>
@@ -21,14 +25,9 @@
                     %{--</g:form>--}%
                     <g:formRemote onSuccess="jQuery('#${museePreferee.getId()}').removeAttr('disabled'); jQuery('#${museePreferee.getId()}').prop('value', 'Ajouter à la list des musées')" url="[resource:museePreferee, action:'supprimerMuseePreferee']" method="PUT"  name="myForm2" update="encart">
                         <fieldset class="buttons">
-                            <g:actionSubmit class="btn-success" action="supprimerMuseePreferee" value="Supprimer de	ma liste de musées" />
+                            <g:if test="${session.musees.size() > 1 }"><g:actionSubmit class="btn-success" action="supprimerMuseePreferee" value="Supprimer de	ma liste de musées" /></g:if>
                         </fieldset>
                     </g:formRemote>
-                </td>
-                <td>
-                    <g:form resource="${museePreferee} " url="[resource:museePreferee, action:'doRedirige']" method="PUT"  name="myForm">
-                        <g:actionSubmit class="btn-success" value="Effectuer une demande de visite"/>
-                    </g:form>
                 </td>
             </tr>
         </g:each>
