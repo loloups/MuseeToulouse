@@ -2,6 +2,7 @@ package museetoulouse
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -9,12 +10,35 @@ import spock.lang.Specification
 @TestFor(Gestionnaire)
 class GestionnaireSpec extends Specification {
 
-    def setup() {
+    @Unroll
+    void "test la validite d'une gestionnaire valide"(String unNumero,String uneRue,int unCodePostal,String uneVille) {
+
+        given: "une adresse initialise avec un numero, une rue, un code postal et une ville"
+        Adresse adresse = new Adresse(numero: unNumero, rue: uneRue,codePostal: unCodePostal, ville: uneVille)
+
+        expect: "l'adresse est valide"
+        adresse.validate() == true
+
+        where:
+        unNumero | uneRue | unCodePostal | uneVille
+        "num"| "rue" | 34567 | "MONTECH"
     }
 
-    def cleanup() {
-    }
+    @Unroll
+    void "test l'invalidite d'un gestionnaire invalide"(String unNumero,String uneRue,int unCodePostal,String uneVille) {
 
-    void "test something"() {
+        given: "une adresse initialise avec un numero, une rue, un code postal et une ville"
+        Adresse adresse = new Adresse(numero: unNumero, rue: uneRue,codePostal: unCodePostal, ville: uneVille)
+
+        expect: "l'adresse est valide"
+        adresse.validate() == false
+
+        where:
+        unNumero | uneRue | unCodePostal | uneVille
+        ""| "rue" | 34567 | "MONTECH"
+        "num"| "" | 34567 | "MONTECH"
+        "num"| "rue" | 3456 | "MONTECH"
+        "num"| "rue" | 34567 | "Montech"
     }
 }
+
