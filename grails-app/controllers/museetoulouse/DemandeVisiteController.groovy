@@ -6,6 +6,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class DemandeVisiteController {
+    DemandeVisiteService demandeVisiteService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -33,16 +34,22 @@ class DemandeVisiteController {
             respond demandeVisiteInstance.errors, view: 'create'
             return
         }
+        demandeVisiteInstance.save flush: true
+
+        demandeVisiteService.ajouterDemandeVisite(demandeVisiteInstance,params)
 
         demandeVisiteInstance.save flush: true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'demandeVisite.label', default: 'DemandeVisite'), demandeVisiteInstance.id])
-                redirect demandeVisiteInstance
-            }
-            '*' { respond demandeVisiteInstance, [status: CREATED] }
-        }
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.created.message', args: [message(code: 'demandeVisite.label', default: 'DemandeVisite'), demandeVisiteInstance.id])
+//                redirect demandeVisiteInstance
+//            }
+//            '*' { respond demandeVisiteInstance, [status: CREATED] }
+//        }
+        def message = "Le code de votre demande est '${demandeVisiteInstance.code}' et elle est en cours de traitement !"
+        render(view: 'result', model: [message: message])
+
     }
 
     def edit(DemandeVisite demandeVisiteInstance) {

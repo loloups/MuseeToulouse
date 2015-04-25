@@ -180,7 +180,7 @@
 						<td>
 							<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris'); jQuery('#encart').show();" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
 								<fieldset class="buttons">
-									<g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${museeInstance.prefere? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${museeInstance.prefere? "true" : "false"}"></g:actionSubmit>
+									<g:if test="${museeInstanceCount > 2}"><g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${session.musees.any{it.id == museeInstance.id}? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${session.musees.contains(museeInstance)? "true" : "false"}"></g:actionSubmit></g:if>
 								</fieldset>
 							</g:formRemote>
 						</td>

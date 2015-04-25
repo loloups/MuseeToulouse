@@ -9,10 +9,15 @@ class DemandeVisite {
     String statut;
     static hasMany = [musees: Musee]
     static constraints = {
-        code blank : false
+        code nullable: true
         dateDebutPeriode blank : false
-        dateFinPeriode blank : false
-        statut blank: true
+        dateFinPeriode blank : false,validator : { val,obj -> val >= obj.dateDebutPeriode }
+        statut defaultValue : "Traitement en cours", nullable: true
+        nbPersonnes blank: false,min: 1,max: 6
+    }
+
+    static mapping = {
+        id column: 'code',name: 'code', type: 'integer',generator: 'identity'
     }
     static belongsTo = [Musee]
 }

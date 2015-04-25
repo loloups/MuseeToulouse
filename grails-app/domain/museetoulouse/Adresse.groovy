@@ -1,5 +1,7 @@
 package museetoulouse
 
+import org.w3c.dom.ranges.Range
+
 class Adresse {
 
     String numero
@@ -12,7 +14,7 @@ class Adresse {
     }
 
     static constraints = {
-        codePostal size: 5, matches: "[0-9]+"
+        codePostal validator: { return (it.toString().size() == 5) }, matches: "[0-9]+"
         ville matches: "[A-Z]+"
     }
 }

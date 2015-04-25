@@ -2,6 +2,8 @@ package museetoulouse
 
 import grails.transaction.Transactional
 
+import javax.servlet.http.HttpSession
+
 @Transactional
 class MuseeService {
 
@@ -59,26 +61,5 @@ class MuseeService {
         }
         res.size()
     }
-    /** Ajouter un musée aux musées préféré
-     *
-     * @param musee
-     * @return la liste des musees préférées
-     */
-    List<Musee> addMuseePrefere(Musee musee) {
-        if(musee)
-        {
-            musee.setPrefere(true)
-            musee.save(flush: true)
-        }
-        Musee.findAllByPrefere(true)
-    }
 
-    List<Musee> deleteMuseePrefere(Musee musee) {
-        if(musee)
-        {
-            musee.setPrefere(false)
-            musee.save(flush: true)
-        }
-        Musee.findAllByPrefere(true)
-    }
 }
