@@ -35,7 +35,7 @@ class DemandeVisiteController {
             return
         }
         demandeVisiteInstance.save flush: true
-
+        
         demandeVisiteService.ajouterDemandeVisite(demandeVisiteInstance,params)
 
         demandeVisiteInstance.save flush: true

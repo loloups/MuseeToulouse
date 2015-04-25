@@ -7,10 +7,6 @@ import javax.servlet.http.HttpSession
 @Transactional
 class MuseeService {
 
-    def serviceMethod() {
-
-    }
-
     /**
      * Cherche les musees correspondant aux critères
      * @param inNomMusee chaîne de caractère présente dans le nom du musee
