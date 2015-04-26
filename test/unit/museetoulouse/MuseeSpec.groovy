@@ -11,40 +11,17 @@ import spock.lang.Unroll
 class MuseeSpec extends Specification {
 
     @Unroll
-    void "test la validite d'une demande de visite de musée valide"(String nom, String horairesOuverture, String telephone,
-            String accesMetro, String accesBus, boolean prefere, Gestionnaire responsable, Adresse adresse) {
+    void "test la validite d'une demande de visite de musï¿½e valide"(String nom, String horairesOuverture, String telephone,
+            String accesMetro, String accesBus, Gestionnaire responsable, Adresse adresse) {
 
-        given: "un musee initialisee avec ses paramètres"
-        Musee musee = new Musee(nom, horairesOuverture, telephone, accesMetro, accesBus, prefere, responsable, adresse)
+        given: "un musee initialisee avec ses paramï¿½tres"
+        Musee musee = new Musee(nom:nom, horairesOuverture:horairesOuverture, telephone:telephone, accesMetro:accesMetro, accesBus:accesBus, responsable:responsable, adresse:adresse)
 
-        expect: "le musée est valide"
+        expect: "le musï¿½e est valide"
         musee.validate() == true
 
         where:
-        nom | horairesOuverture | telephone | accesMetro | accesBus | prefere | responsable | adresse
-        "dfb" | "dfb" | "dfb" | "dfb" | "dfb" | true | new Gestionnaire() | "dfb"
-        " " | " " | " " | " " | " " | true | new Gestionnaire() | " "
-    }
-
-    @Unroll
-    void "test l'invalidite d'une demande de visite de musée valide"(String nom, String horairesOuverture, String telephone,
-                                                                    String accesMetro, String accesBus, boolean prefere, Gestionnaire responsable, Adresse adresse) {
-
-        given: "un musee initialisee avec ses paramètres"
-        Musee musee = new Musee(nom, horairesOuverture, telephone, accesMetro, accesBus, prefere, responsable, adresse)
-
-        expect: "le musée est invalide"
-        musee.validate() == false
-
-        where:
-        nom | horairesOuverture | telephone | accesMetro | accesBus | prefere | responsable | adresse
-        String | "dfb" | "dfb" | "dfb" | "dfb" | true | new Gestionnaire() | "dfb"
-        " " | String | " " | " " | " " | true | new Gestionnaire() | " "
-        " " | " " | String | " " | " " | true | new Gestionnaire() | " "
-        " " | " " | " " | String | " " | true | new Gestionnaire() | " "
-        " " | " " | " " | " " | String | true | new Gestionnaire() | " "
-        " " | " " | " " | " " | " " | boolean | new Gestionnaire() | " "
-        " " | " " | " " | " " | " " | true | Gestionnaire | " "
-        " " | " " | " " | " " | " " | true | new Gestionnaire() | String
+        nom | horairesOuverture | telephone | accesMetro | accesBus | responsable | adresse
+        "dfb" | "dfb" | "dfb" | "dfb" | "dfb" | new Gestionnaire() | new Adresse()
     }
 }

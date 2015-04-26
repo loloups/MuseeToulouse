@@ -10,31 +10,31 @@ import spock.lang.Unroll
 @TestFor(DemandeVisiteMusee)
 class DemandeVisiteMuseeSpec extends Specification {
 
+//    @Unroll
+//    void "test la validite d'une demande de visite de musï¿½e valide"(Date date,def _) {
+//
+//        given: "une demande initialisee avec musee, demandeVisite et date"
+//        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(demandeVisite:Mock(DemandeVisite), musee:Mock(Gestionnaire), date:date)
+//
+//        expect: "la demande est valide"
+//        demandeVisiteMusee.validate() == true
+//
+//        where:
+//        date | _
+//        new Date() | _
+//    }
+
     @Unroll
-    void "test la validite d'une demande de visite de musée valide"(DemandeVisite demandeVisite,Musee musee,Date date) {
+    void "test l'invalidite d'une demande de visite de musï¿½e valide"(DemandeVisite demandeVisite,Musee musee,Date date) {
 
         given: "une demande initialisee avec musee, demandeVisite et date"
-        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(demandeVisite, musee, date)
-
-        expect: "la demande est valide"
-        demandeVisiteMusee.validate() == true
-
-        where:
-        demandeVisite | musee | date
-        new DemandeVisite()| new Musee() | new Date()
-    }
-
-    @Unroll
-    void "test l'invalidite d'une demande de visite de musée valide"(DemandeVisite demandeVisite,Musee musee,Date date) {
-
-        given: "une demande initialisee avec musee, demandeVisite et date"
-        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(demandeVisite, musee, date)
+        DemandeVisiteMusee demandeVisiteMusee = new DemandeVisiteMusee(demandeVisite:demandeVisite, musee:musee, date:date)
 
         expect: "la demande est invalide"
         demandeVisiteMusee.validate() == false
 
         where:
         demandeVisite | musee | date
-         " " | " " | " "
+         null|null | null
     }
 }

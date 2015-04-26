@@ -2,7 +2,8 @@ package museetoulouse
 
 class Gestionnaire {
 
-    String nom;
+    String nom
+
     static hasMany = [ musees : Musee]
 
     String toString() {

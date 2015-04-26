@@ -13,7 +13,7 @@ class AdresseControllerSpec extends Specification {
         params["numero"] = '34';
         params["rue"] = 'Moulin Jean';
         params["codePostal"] = 45678;
-        params["ville"] = 'Montech';
+        params["ville"] = 'MONTECH';
     }
 
     void "Test the index action returns the correct model"() {
