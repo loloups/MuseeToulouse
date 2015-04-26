@@ -26,14 +26,6 @@
 			display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
 		}
 
-
-
-		/*#temp*/
-		/*{*/
-			/*table-layout: fixed;*/
-			/*width: 100%;*/
-		/*}*/
-
 		#status ul {
 			font-size: 0.9em;
 			list-style-type: none;
@@ -178,11 +170,13 @@
 						<td>${fieldValue(bean: museeInstance, field: "responsable")}</td>
 
 						<td>
-							<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris'); jQuery('#encart').show();" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
-								<fieldset class="buttons">
-									<g:if test="${museeInstanceCount > 2}"><g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${session.musees.any{it.id == museeInstance.id}? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${session.musees.contains(museeInstance)? "true" : "false"}"></g:actionSubmit></g:if>
-								</fieldset>
-							</g:formRemote>
+							<g:if test="${museeInstanceCount > 2}">
+								<g:formRemote onSuccess="jQuery('#${museeInstance.getId()}').attr('disabled', 'true'); jQuery('#${museeInstance.getId()}').prop('value', 'Déjà en favoris'); jQuery('#encart').show();" url="[resource:museeInstance, action:'ajouterMuseePreferee']" method="PUT"  name="myForm" update="encart">
+									<fieldset class="buttons">
+										<g:actionSubmit id="${museeInstance.getId()}" class="btn-success" action="ajouterMuseePreferee" value="${session.musees.any{it.id == museeInstance.id}? "Déjà en favoris" : "Ajouter à la liste des musées"}" disabled="${session.musees.contains(museeInstance)? "true" : "false"}"></g:actionSubmit>
+									</fieldset>
+								</g:formRemote>
+							</g:if>
 						</td>
 					
 					</tr>
