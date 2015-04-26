@@ -11,33 +11,30 @@ import spock.lang.Unroll
 class GestionnaireSpec extends Specification {
 
     @Unroll
-    void "test la validite d'un gestionnaire"(String nom) {
+    void "test la validite d'un gestionnaire"(String unNom) {
 
         given: "un gestionnaire initialisee avec son nom"
-        Gestionnaire gestionnaire = new Gestionnaire(nom)
+        Gestionnaire gestionnaire = new Gestionnaire(unNom)
 
         expect: "le gestionnaire est valide"
         gestionnaire.validate() == true
 
         where:
-        nom
-        "azegs"
-        "1234"
+        unNom << ["azegs", "1234"]
+
     }
 
     @Unroll
-    void "test l'invalidite d'un gestionnaire"(String nom) {
+    void "test l'invalidite d'un gestionnaire"(String unNom) {
 
         given: "un gestionnaire initialisee avec son nom"
-        Gestionnaire gestionnaire = new Gestionnaire(nom)
+        Gestionnaire gestionnaire = new Gestionnaire(unNom)
 
         expect: "le gestionnaire est valide"
         gestionnaire.validate() == false
 
         where:
-        nom
-        ""
-        1234
+        unNom << ["", 1234]
     }
 }
 
