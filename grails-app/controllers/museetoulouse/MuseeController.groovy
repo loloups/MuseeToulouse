@@ -36,6 +36,12 @@ class MuseeController {
     def ajouterMuseePreferee(Musee museeInstance) {
         if(museeInstance)
             session.musees.add museeInstance
+        Collections.sort(session.musees,new Comparator<Musee>() {
+            @Override
+            int compare(Musee m1, Musee m2) {
+                return m1.nom.compareTo(m2.nom)
+            }
+        })
         def museesPreferees = session.musees
         //museeInstance.save(flush: true)
         params.max = 5;
@@ -65,6 +71,12 @@ class MuseeController {
                 }
             }
         }
+        Collections.sort(session.musees,new Comparator<Musee>() {
+            @Override
+            int compare(Musee m1, Musee m2) {
+                return m1.nom.compareTo(m2.nom)
+            }
+        })
         def museesPreferees = session.musees
         //museeInstance.save(flush: true)
         params.max = 5;
