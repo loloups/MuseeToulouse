@@ -2,6 +2,7 @@ package museetoulouse
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -9,12 +10,39 @@ import spock.lang.Specification
 @TestFor(DemandeVisite)
 class DemandeVisiteSpec extends Specification {
 
-    def setup() {
+    @Unroll
+    void "test la validite d'une demande de visite valide"(int code,Date dateDebutPeriode, Date dateFinPeriode, int nbPersonnes, String statut) {
+
+        given: "une demande initialisee avec musee, demandeVisite et date"
+        DemandeVisite demandeVisite = new DemandeVisite(code, dateDebutPeriode, dateFinPeriode, nbPersonnes, statut)
+
+        expect: "la demande est valide"
+        demandeVisite.validate() == true
+
+        where:
+        code | dateDebutPeriode | dateFinPeriode | nbPersonnes | statut
+         int | new Date(26, 4, 2015) |new Date(26, 4, 2015) | 5 | "efdsfb"
+        3 | new Date(26, 4, 2015) |new Date(27, 4, 2015) | 5 | "efdsfb"
+        int | new Date(26, 4, 2015) |new Date(27, 4, 2015) | 5 | String
+
     }
 
-    def cleanup() {
-    }
+    @Unroll
+    void "test l'invalidite d'une demande de visite valide"(int code,Date dateDebutPeriode, Date dateFinPeriode, int nbPersonnes, String statut) {
 
-    void "test something"() {
+        given: "une demande initialisee avec musee, demandeVisite et date"
+        DemandeVisite demandeVisite = new DemandeVisite(code, dateDebutPeriode, dateFinPeriode, nbPersonnes, statut)
+
+        expect: "la demande est invalide"
+        demandeVisite.validate() == false
+
+        where:
+        code | dateDebutPeriode | dateFinPeriode | nbPersonnes | statut
+        int | new Date(26, 4, 2015) |new Date(25, 4, 2015) | 5 | "efdsfb"
+        3 | Date |new Date(27, 4, 2015) | 5 | "efdsfb"
+        int | new Date(26, 4, 2015) | Date | 5 | String
+        int | new Date(26, 4, 2015) |new Date(27, 4, 2015) | 0 | String
+        int | new Date(26, 4, 2015) |new Date(27, 4, 2015) | 7 | String
+
     }
 }

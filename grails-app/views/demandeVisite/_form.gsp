@@ -34,11 +34,10 @@
         <g:message code="demandeVisite.musees.label" default="Musees"/>
         <span class="required-indicator">*</span>
     </label>
-    <ul>
         <g:each in="${session.musees}" var="musee">
-            <li><g:checkBox name="museesPreferees" value="${musee.id}" checked="false"/>
-            <label for="museesPreferees">${musee.nom}</label></li>
+            <g:checkBox name="museesPreferees" value="${musee.id}" checked="false"/>
+            <label for="museesPreferees" style="text-align: left;">${musee.nom}</label>
+            <br/><br/>
         </g:each>
-    </ul>
 </div>
 
